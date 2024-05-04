@@ -14,10 +14,28 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     public void Start()
     {
+       InitCardSystem();
+    }
+
+    private void InitCardSystem()
+    {
         CardManager.Instance.LoadCardSprites();
         CardManager.Instance.SetupCards(Root, Board, GridSize);
         CardManager.Instance.SetupSpritesOnCards();
         StartCoroutine(CardManager.Instance.BoardPreview(PreviewTime));
         CardManager.Instance.AddListeners();
+        CardManager.Instance.OnCardsAreOver += WinGame;
+        CardManager.Instance.SetCountOfCards();
+    }
+
+    private void DeinitCardSystem()
+    {
+        CardManager.Instance.OnCardsAreOver -= WinGame;
+        CardManager.Instance.RemoveListeners();
+    }
+
+    private void WinGame()
+    {
+        Debug.LogWarning("U win the Game");
     }
 }

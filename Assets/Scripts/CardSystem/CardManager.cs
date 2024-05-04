@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -10,11 +9,15 @@ namespace CardSystem
 {
     public class CardManager : MonoBehaviorSingleton<CardManager>
     {
+        public delegate void CardsAreOver();
+
+        public event CardsAreOver OnCardsAreOver;
         [HideInInspector] public Sprite CardBack = null;
         private const string CARD_PATH = "Prefabs/Card";
         private CardView[] cardViews = null;
         private Sprite[] cardSprites = null;
         private CardPair cardPair = null;
+        private int leftCards;
 
         public void AddListeners()
         {
@@ -23,6 +26,10 @@ namespace CardSystem
             CardView.CardClicked += OnCardClicked;
         }
 
+        public void SetCountOfCards()
+        {
+            leftCards = cardViews.Length;
+        }
 
         public void RemoveListeners()
         {
@@ -37,9 +44,9 @@ namespace CardSystem
 
         public void LoadCardSprites()
         {
-            cardSprites = GameResourceManager.Instance.LoadAllCards();
+            cardSprites ??= GameResourceManager.Instance.LoadAllCards();
             Debug.Assert(cardSprites != null && cardSprites.Length != 0, "Card Icons collection is null or empty");
-            CardBack = GameResourceManager.Instance.LoadSprite("Sprites/Cards/Background/Back");
+            CardBack ??= GameResourceManager.Instance.LoadSprite("Sprites/Cards/Background/Back");
             Debug.Assert(CardBack != null, "Background of card is null");
         }
 
@@ -153,11 +160,13 @@ namespace CardSystem
             {
                 cardViews[left.Index].DisableCard();
                 cardViews[right.Index].DisableCard();
+                CheckCardsAreOver();
             } else
             {
                 cardViews[left.Index].Flip();
                 cardViews[right.Index].Flip();
             }
+
             cardPair.FlushPair();
         }
 
@@ -165,6 +174,20 @@ namespace CardSystem
         {
             Debug.Assert(cardPair != null, "Card pair is null");
             cardPair.AddPair(cardmodel);
+        }
+
+        private void CheckCardsAreOver()
+        {
+            if( leftCards < 1 )
+            {
+                return;
+            }
+
+            leftCards -= 2;
+            if( leftCards == 0 )
+            {
+                OnCardsAreOver?.Invoke();
+            }
         }
     }
 }
