@@ -6,8 +6,11 @@ using UnityEngine.UI;
 
 namespace CardSystem
 {
+    public delegate void CardClicked( CardModel cardModel );
+
     public class CardView : MonoBehaviour
     {
+        public static event CardClicked CardClicked;
         public CardModel CardModel;
         private Button cardButton;
 
@@ -33,10 +36,10 @@ namespace CardSystem
                 return;
             }
 
-            Flip();
+            Flip(() => CardClicked?.Invoke(CardModel));
         }
 
-        public void Flip()
+        public void Flip( Action onFinalized = null )
         {
             if( CardModel.Turning )
             {
@@ -44,16 +47,17 @@ namespace CardSystem
             }
 
             CardModel.Turning = true;
-            StartCoroutine(FlipAnimation());
+            StartCoroutine(FlipAnimation(onFinalized));
         }
 
-        private IEnumerator FlipAnimation()
+        private IEnumerator FlipAnimation( Action onFinalize = null )
         {
             yield return RotateCard(!CardModel.Hide ? 90f : 0);
             CardModel.Hide = !CardModel.Hide;
             ChangeCardView();
             yield return RotateCard(!CardModel.Hide ? 180f : 0);
             CardModel.Turning = false;
+            onFinalize?.Invoke();
         }
 
         private IEnumerator RotateCard( float targetAngle = 90, float flipTimeDuration = 0.25f )
@@ -79,7 +83,7 @@ namespace CardSystem
                 return;
             }
 
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            transform.rotation = Quaternion.Euler(0f, 0, 0f);
             CardModel.Hide = true;
         }
     }

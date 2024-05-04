@@ -12,7 +12,7 @@ namespace Utils
             private set;
         }
 
-        public int TotalAvatarsCount
+        public int TotalCarsSpriteCount
         {
             get;
             private set;
@@ -60,7 +60,7 @@ namespace Utils
         {
             List<Sprite> avatars = new List<Sprite>();
 
-            for (int i = 0; i < TotalAvatarsCount; ++i)
+            for (int i = 0; i < TotalCarsSpriteCount; ++i)
             {
                 Sprite sp = GetFormAssetHashTable<Sprite>("Sprites/Cards/" + i.ToString());
                 if (sp != null)
@@ -184,7 +184,7 @@ namespace Utils
         private void SetCardsCount()
         {
             UnityEngine.Object[] avatars = Resources.LoadAll("Sprites/Cards");
-            TotalAvatarsCount = avatars.Length;
+            TotalCarsSpriteCount = avatars.Length;
             for (int i = 0; i < avatars.Length; ++i)
                 Resources.UnloadAsset(avatars[i]);
         }
