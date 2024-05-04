@@ -12,7 +12,7 @@ namespace CardSystem
         private Button cardButton;
 
 
-        private void Start()
+        public void Init()
         {
             cardButton = transform.GetComponent<Button>();
             Debug.Assert(cardButton != null, "Can not find a button instance");
@@ -22,7 +22,7 @@ namespace CardSystem
             ResetRotation();
         }
 
-        public void OnCardClicked()
+        private void OnCardClicked()
         {
             if( CardModel.Visible || CardModel.Turning )
             {
