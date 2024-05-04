@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 namespace CardSystem
 {
-    public class CardInfo
+    public class CardModel
     {
         public int ID;
         public Image Image;
         public bool Visible;
         public bool Turning;
 
-        public CardInfo()
+        public CardModel()
         {
         }
         
-        public CardInfo( int id, Image image, bool visible, bool turning )
+        public CardModel( int id, Image image, bool visible, bool turning )
         {
             ID = id;
             Image = image;
