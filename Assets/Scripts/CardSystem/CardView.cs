@@ -20,6 +20,7 @@ namespace CardSystem
             Debug.Assert(cardButton != null, "Can not find a button instance");
             cardButton.onClick.RemoveAllListeners();
             cardButton.onClick.AddListener(OnCardClicked);
+            cardButton.image.color = Color.white;
             CardModel = new CardModel { Hide = false };
             ResetRotation();
         }
@@ -85,6 +86,31 @@ namespace CardSystem
 
             transform.rotation = Quaternion.Euler(0f, 0, 0f);
             CardModel.Hide = true;
+        }
+
+        public void DisableCard()
+        {
+            cardButton.onClick.RemoveAllListeners();
+            StartCoroutine(Fade());
+        }
+        
+        private IEnumerator Fade()
+        {
+            float fadeDuration = 2.5f;
+            float elapsedTime = 0f;
+            Image image = cardButton.image;
+            Color startColor = image.color;
+            Color endColor = Color.clear;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / fadeDuration);
+                image.color = Color.Lerp(startColor, endColor, t);
+                yield return null;
+            }
+
+            image.color = endColor;
         }
     }
 }

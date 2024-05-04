@@ -151,7 +151,8 @@ namespace CardSystem
         {
             if( cardPair.IsEqual() )
             {
-                
+                cardViews[left.Index].DisableCard();
+                cardViews[right.Index].DisableCard();
             } else
             {
                 cardViews[left.Index].Flip();
