@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acabc29f0b7aead448a7e544e6d33294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSize: 3
+  GridSize: 9
   Board: {fileID: 1925525012}
   Root: {fileID: 1619840755}
 --- !u!1 &1591140753

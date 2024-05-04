@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     public void Start()
     {
+        
+        CardManager.Instance.LoadCardSprites();
         CardManager.Instance.SetupCards(Root, Board, GridSize);
+        CardManager.Instance.SetupSpritesOnCards();
     }
 }

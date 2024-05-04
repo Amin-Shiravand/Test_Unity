@@ -10,8 +10,7 @@ namespace CardSystem
     {
         public CardModel CardModel;
         private Button cardButton;
-
-
+        
         public void Init()
         {
             cardButton = transform.GetComponent<Button>();
@@ -22,6 +21,12 @@ namespace CardSystem
             ResetRotation();
         }
 
+        //Test function to check the sprite images
+        public void SetCard()
+        {
+            cardButton.image.sprite = CardModel.Sprite;
+        }
+
         private void OnCardClicked()
         {
             if( CardModel.Visible || CardModel.Turning )
@@ -30,7 +35,7 @@ namespace CardSystem
             }
             Flip();
         }
-
+        
         private void Flip()
         {
             if( CardModel.Turning )
