@@ -10,33 +10,33 @@ namespace CardSystem
     {
         public CardModel CardModel;
         private Button cardButton;
-        
+
         public void Init()
         {
             cardButton = transform.GetComponent<Button>();
             Debug.Assert(cardButton != null, "Can not find a button instance");
             cardButton.onClick.RemoveAllListeners();
             cardButton.onClick.AddListener(OnCardClicked);
-            CardModel = new CardModel { Visible = false }; //This is for test
+            CardModel = new CardModel { Hide = false };
             ResetRotation();
         }
 
-        //Test function to check the sprite images
-        public void SetCard()
+        public void ChangeCardView()
         {
-            cardButton.image.sprite = CardModel.Sprite;
+            cardButton.image.sprite = !CardModel.Hide ? CardModel.Sprite : CardManager.Instance.CardBack;
         }
 
         private void OnCardClicked()
         {
-            if( CardModel.Visible || CardModel.Turning )
+            if( !CardModel.Hide || CardModel.Turning )
             {
                 return;
             }
+
             Flip();
         }
-        
-        private void Flip()
+
+        public void Flip()
         {
             if( CardModel.Turning )
             {
@@ -49,13 +49,10 @@ namespace CardSystem
 
         private IEnumerator FlipAnimation()
         {
-            yield return RotateCard(CardModel.Visible ? 90f : 0);
-            if( CardModel.Visible )
-            {
-            }
-
-            CardModel.Visible = !CardModel.Visible;
-            yield return RotateCard(CardModel.Visible ? 180f : 0);
+            yield return RotateCard(!CardModel.Hide ? 90f : 0);
+            CardModel.Hide = !CardModel.Hide;
+            ChangeCardView();
+            yield return RotateCard(!CardModel.Hide ? 180f : 0);
             CardModel.Turning = false;
         }
 
@@ -81,8 +78,9 @@ namespace CardSystem
             {
                 return;
             }
+
             transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            CardModel.Visible = false;
+            CardModel.Hide = true;
         }
     }
 }

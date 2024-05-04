@@ -9,18 +9,18 @@ namespace CardSystem
     {
         public int Index;
         public Sprite Sprite;
-        public bool Visible;
+        public bool Hide;
         public bool Turning;
 
         public CardModel()
         {
         }
 
-        public CardModel( int index, Sprite sprite, bool visible, bool turning )
+        public CardModel( int index, Sprite sprite, bool hide, bool turning )
         {
             Index = index;
             Sprite = sprite;
-            Visible = visible;
+            Hide = hide;
             Turning = turning;
         }
     }

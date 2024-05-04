@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -8,17 +10,19 @@ namespace CardSystem
 {
     public class CardManager : MonoBehaviorSingleton<CardManager>
     {
+        [HideInInspector]
+        public Sprite CardBack = null;
         private const string CARD_PATH = "Prefabs/Card";
         private CardView[] cardViews = null;
         private Sprite[] cardSprites = null;
-        private Sprite cardBack = null;
+       
 
         public void LoadCardSprites()
         {
             cardSprites = GameResourceManager.Instance.LoadAllCards();
             Debug.Assert(cardSprites!=null && cardSprites.Length!=0, "Card Icons collection is null or empty");
-            cardBack = GameResourceManager.Instance.LoadSprite("Sprites/Cards/Background/Back");
-            Debug.Assert(cardBack!=null, "Background of card is null");
+            CardBack = GameResourceManager.Instance.LoadSprite("Sprites/Cards/Background/Back");
+            Debug.Assert(CardBack!=null, "Background of card is null");
         }
 
         public void SetupSpritesOnCards()
@@ -30,7 +34,7 @@ namespace CardSystem
     
             for (int i = 0; i < pairCount; ++i)
             {
-                int index = Random.Range(0, maxIndex); // Ensure it can pick the last sprite too
+                int index = Random.Range(0, maxIndex); 
         
                 int pair = 0;
                 while (pair < 2 && cardWithSprite.Count < cardViews.Length)
@@ -40,10 +44,23 @@ namespace CardSystem
                     {
                         cardWithSprite.Add(randomPosition);
                         cardViews[randomPosition].CardModel.Sprite = cardSprites[index];
-                        cardViews[randomPosition].SetCard();
                         pair++;
                     }
                 }
+            }
+            cardWithSprite.Clear();
+        }
+
+        public IEnumerator CardPreview( float showTime = 0.5f )
+        {
+            for( int i = 0; i < cardViews.Length; ++i )
+            {
+                cardViews[i].ChangeCardView();
+            }
+            yield return new WaitForSeconds(showTime);
+            for( int i = 0; i < cardViews.Length; ++i )
+            {
+                cardViews[i].Flip();
             }
         }
 
