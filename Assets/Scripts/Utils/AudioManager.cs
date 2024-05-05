@@ -14,8 +14,12 @@ public class AudioManager : Singleton<AudioManager>
 
     public override void Init()
     {
+        if( IsInit )
+        {
+            return;
+        }
         base.Init();
-
+        
         ButtonClick = GameResourceManager.Instance.LoadAudioClip("Click");
         Match = GameResourceManager.Instance.LoadAudioClip("Match");
         Error = GameResourceManager.Instance.LoadAudioClip("Error");

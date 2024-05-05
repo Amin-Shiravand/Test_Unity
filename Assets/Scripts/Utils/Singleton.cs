@@ -6,6 +6,7 @@ namespace Utils
 {
     public class Singleton<T> where T : class, new()
     {
+        protected bool IsInit = false;
         private static readonly object LockObject = new object();
         private static T s_instance;
 
@@ -37,6 +38,10 @@ namespace Utils
         }
 
         protected Singleton() { }
-        public virtual void Init() { }
+
+        public virtual void Init()
+        {
+            IsInit = true;
+        }
     }
 }

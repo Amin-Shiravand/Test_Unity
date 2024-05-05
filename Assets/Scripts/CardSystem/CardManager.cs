@@ -9,8 +9,10 @@ namespace CardSystem
 {
     public class CardManager : MonoBehaviorSingleton<CardManager>
     {
+        public delegate void MatchPaired();
         public delegate void CardsAreOver();
 
+        public event MatchPaired onMatchPaired;
         public event CardsAreOver OnCardsAreOver;
         [HideInInspector] public Sprite CardBack = null;
         private const string CARD_PATH = "Prefabs/Card";
@@ -169,6 +171,7 @@ namespace CardSystem
         {
             if( cardPair.IsEqual() )
             {
+                onMatchPaired?.Invoke();
                 AudioManager.Instance.PlayMatchPairs();
                 cardViews[left.Index].DisableCard();
                 cardViews[right.Index].DisableCard();
