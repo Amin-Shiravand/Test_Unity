@@ -9,6 +9,7 @@ namespace  SaveSystem
     [Serializable]
     public class SaveData
     {
+        public int LeftCards;
         public int Score;
         public int BoardSize;
         public float Time;

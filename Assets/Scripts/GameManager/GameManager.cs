@@ -55,7 +55,15 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
                 CardModel cardModel = CardManager.Instance.cardViews[i].CardModel;
                 cardsModel[i] = cardModel;
             }
-            SaveManager.Instance.SaveData(new SaveData() { Score = score, Time = timeKeeper, BoardSize = boardSize, CardModels = cardsModel });
+
+            SaveManager.Instance.SaveData(new SaveData()
+            {
+                Score = score,
+                LeftCards = CardManager.Instance.LeftCards,
+                Time = timeKeeper,
+                BoardSize = boardSize,
+                CardModels = cardsModel
+            });
         }
 
         GameStarts = false;
@@ -81,6 +89,22 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
         GameStarts = true;
     }
 
+    public void LoadGame( SaveData saveData )
+    {
+        this.boardSize = saveData.BoardSize;
+        SetScore(saveData.Score);
+        SetTime(saveData.Time);
+        CardManager.Instance.LoadCardSprites();
+        CardManager.Instance.SetupCards(Root, Board, boardSize);
+        CardManager.Instance.SetBoardState(saveData.CardModels);
+        StartCoroutine(CardManager.Instance.BoardPreview(BasePreviewTime));
+        CardManager.Instance.AddListeners();
+        CardManager.Instance.onMatchPaired += OnMatchPaired;
+        CardManager.Instance.OnCardsAreOver += WinGame;
+        CardManager.Instance.SetCountOfCards(saveData.LeftCards);
+        GameStarts = true;
+    }
+
     public void DeinitCardSystem()
     {
         CardManager.Instance.OnCardsAreOver -= WinGame;
@@ -91,7 +115,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     private void WinGame()
     {
-        FinishGame(false,false);
+        FinishGame(false, false);
     }
 
     private void OnMatchPaired()

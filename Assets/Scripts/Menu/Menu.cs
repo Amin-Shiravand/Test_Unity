@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SaveSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -32,10 +33,10 @@ public class Menu : MonoBehaviour
         BoardSizeSlider.wholeNumbers = true;
         Instance = this;
     }
-    
+
     public void OnEnable()
     {
-        Continue.gameObject.SetActive(SaveManager.Instance.IsSaveFileExist());    
+        Continue.interactable = SaveManager.Instance.IsSaveFileExist();
     }
 
     public void SetMenuState()
@@ -57,6 +58,8 @@ public class Menu : MonoBehaviour
 
     private void OnContinueGame()
     {
-
+        SaveData saveData = SaveManager.Instance.LoadGameData();
+        GameManager.Instance.LoadGame(saveData);
+        SetMenuState();
     }
 }
