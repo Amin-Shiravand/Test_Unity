@@ -20,7 +20,7 @@ namespace CardSystem
             cardButton.onClick.RemoveAllListeners();
             cardButton.onClick.AddListener(OnCardClicked);
             cardButton.image.color = Color.white;
-            CardModel = new CardModel { Hide = false };
+            CardModel = new CardModel { Hide = false, IsActive = true };
             ResetRotation();
         }
 
@@ -45,7 +45,7 @@ namespace CardSystem
             {
                 return;
             }
-            
+
             CardModel.Turning = true;
             AudioManager.Instance.PlayButton();
             if( gameObject.activeInHierarchy )
@@ -99,7 +99,7 @@ namespace CardSystem
                 StartCoroutine(Fade());
             }
         }
-        
+
         private IEnumerator Fade()
         {
             float fadeDuration = 2.5f;
@@ -108,7 +108,7 @@ namespace CardSystem
             Color startColor = image.color;
             Color endColor = Color.clear;
 
-            while (elapsedTime < fadeDuration)
+            while( elapsedTime < fadeDuration )
             {
                 elapsedTime += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsedTime / fadeDuration);

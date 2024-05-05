@@ -1,4 +1,5 @@
 using CardSystem;
+using SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
     public Transform Root;
     public Button BackToMenu;
     private int score = 0;
+    private int boardSize = 0;
     private float timeKeeper;
     private float nextSecond;
     public TMP_Text ScoreText;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
         Debug.Assert(Root != null, "Board root panel is null");
         Debug.Assert(BackToMenu != null, "Back to menu is null");
         Debug.Assert(ScoreText != null, "ScoreText is null");
+        SaveManager.Instance.Init();
         AudioManager.Instance.Init();
         BackToMenu.onClick.AddListener(OnBackToMenuClick);
     }
@@ -33,14 +36,26 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
     private void OnBackToMenuClick()
     {
         AudioManager.Instance.PlayButton();
-        FinishGame();
+        FinishGame(false, true);
     }
 
-    private void FinishGame( bool looseGame = false )
+    private void FinishGame( bool looseGame, bool saveData )
     {
         if( looseGame )
         {
             AudioManager.Instance.LooseGame();
+        }
+
+        SaveManager.Instance.DeleteSaveData();
+        if( saveData )
+        {
+            CardModel[] cardsModel = new CardModel[CardManager.Instance.cardViews.Length];
+            for( int i = 0; i < cardsModel.Length; ++i )
+            {
+                CardModel cardModel = CardManager.Instance.cardViews[i].CardModel;
+                cardsModel[i] = cardModel;
+            }
+            SaveManager.Instance.SaveData(new SaveData() { Score = score, Time = timeKeeper, BoardSize = boardSize, CardModels = cardsModel });
         }
 
         GameStarts = false;
@@ -50,6 +65,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     public void InitCardSystem( int boardSize = 2 )
     {
+        this.boardSize = boardSize;
         float additionalPreviewTime = BasePreviewTime * ( boardSize * 0.1f );
         float additionalTime = Time * ( boardSize * 0.1f );
         SetScore(0);
@@ -75,7 +91,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     private void WinGame()
     {
-        FinishGame();
+        FinishGame(false,false);
     }
 
     private void OnMatchPaired()
@@ -123,7 +139,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
         if( timeKeeper < 0 )
         {
-            FinishGame(true);
+            FinishGame(true, false);
         }
     }
 }

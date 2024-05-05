@@ -26,10 +26,16 @@ public class Menu : MonoBehaviour
         Debug.Assert(BoardSizeSlider != null, "Board Size Slide is null");
         BoardSizeSlider.onValueChanged.AddListener(OnBoardSizeTextChanged);
         StartGame.onClick.AddListener(OnGameStarted);
+        Continue.onClick.AddListener(OnContinueGame);
         BoardSizeSlider.minValue = 2;
         BoardSizeSlider.maxValue = 12;
         BoardSizeSlider.wholeNumbers = true;
         Instance = this;
+    }
+    
+    public void OnEnable()
+    {
+        Continue.gameObject.SetActive(SaveManager.Instance.IsSaveFileExist());    
     }
 
     public void SetMenuState()
@@ -49,8 +55,8 @@ public class Menu : MonoBehaviour
         BoardSizeText.text = $"{value}*{value}";
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnContinueGame()
     {
+
     }
 }

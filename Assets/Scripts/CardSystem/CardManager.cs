@@ -10,13 +10,14 @@ namespace CardSystem
     public class CardManager : MonoBehaviorSingleton<CardManager>
     {
         public delegate void MatchPaired();
+
         public delegate void CardsAreOver();
 
         public event MatchPaired onMatchPaired;
         public event CardsAreOver OnCardsAreOver;
         [HideInInspector] public Sprite CardBack = null;
         private const string CARD_PATH = "Prefabs/Card";
-        private CardView[] cardViews = null;
+        public CardView[] cardViews = null;
         private Sprite[] cardSprites = null;
         private CardPair cardPair = null;
         private int leftCards;
@@ -82,6 +83,7 @@ namespace CardSystem
                     {
                         cardWithSprite.Add(randomPosition);
                         cardViews[randomPosition].CardModel.Sprite = cardSprites[index];
+                        cardViews[randomPosition].CardModel.SpriteName = cardSprites[index].name;
                         pair++;
                     }
                 }
@@ -173,6 +175,8 @@ namespace CardSystem
             {
                 onMatchPaired?.Invoke();
                 AudioManager.Instance.PlayMatchPairs();
+                cardViews[left.Index].CardModel.IsActive = false;
+                cardViews[right.Index].CardModel.IsActive = false;
                 cardViews[left.Index].DisableCard();
                 cardViews[right.Index].DisableCard();
                 CheckCardsAreOver();
