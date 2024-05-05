@@ -53,9 +53,9 @@ namespace Utils
             {
                 GameObject currentObject = activeObjects[i];
                 currentObject.SetActive(false);
-                activeObjects.Remove(currentObject);
                 inactiveObjects.Add(currentObject);
             }
+            activeObjects.Clear();
         }
         public void ReturnToPool(GameObject instance)
         {

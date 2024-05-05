@@ -76,7 +76,7 @@ namespace CardSystem
         }
 
 
-        private void ResetRotation()
+        public void ResetRotation()
         {
             if( transform.rotation.y == 0 )
             {

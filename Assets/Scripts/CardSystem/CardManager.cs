@@ -31,6 +31,17 @@ namespace CardSystem
             leftCards = cardViews.Length;
         }
 
+        public void FlushTheCards()
+        {
+            for( int i = 0; i < cardViews.Length; ++i )
+            {
+                CardView card = cardViews[i];
+                card.ResetRotation();
+            }
+
+            PoolManager.Instance.ReturnAllObjectToPool(CARD_PATH);
+        }
+
         public void RemoveListeners()
         {
             if( cardPair != null )

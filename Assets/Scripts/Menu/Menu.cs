@@ -7,8 +7,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class Menu : MonoBehaviorSingleton<Menu>
+public class Menu : MonoBehaviour
 {
+    public static Menu Instance = null;
     public Button StartGame;
 
     public Button Continue;
@@ -28,6 +29,7 @@ public class Menu : MonoBehaviorSingleton<Menu>
         BoardSizeSlider.minValue = 2;
         BoardSizeSlider.maxValue = 12;
         BoardSizeSlider.wholeNumbers = true;
+        Instance = this;
     }
 
     public void SetMenuState()
