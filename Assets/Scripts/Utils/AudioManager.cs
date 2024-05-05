@@ -10,6 +10,7 @@ public class AudioManager : Singleton<AudioManager>
     private AudioClip ButtonClick;
     private AudioClip Match;
     private AudioClip Error;
+    private AudioClip Lose;
 
     public override void Init()
     {
@@ -18,12 +19,14 @@ public class AudioManager : Singleton<AudioManager>
         ButtonClick = GameResourceManager.Instance.LoadAudioClip("Click");
         Match = GameResourceManager.Instance.LoadAudioClip("Match");
         Error = GameResourceManager.Instance.LoadAudioClip("Error");
+        Lose = GameResourceManager.Instance.LoadAudioClip("Lose");
         audioObjectSourceInstance = new GameObject("AudioSourceInstance");
         audioSourceInstance = audioObjectSourceInstance.AddComponent<AudioSource>();
         Debug.Assert(ButtonClick != null, "ButtonClick clip is null");             
         Debug.Assert(Match != null, "Match clip is null");           
         Debug.Assert(Error != null, "Error clip is null");  
         Debug.Assert(audioSourceInstance != null, "AudioSource is null");
+        Debug.Assert(Lose != null, "Lose is null");
     }
     
     public void PlayButton()

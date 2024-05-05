@@ -45,9 +45,13 @@ namespace CardSystem
             {
                 return;
             }
-
+            
             CardModel.Turning = true;
-            StartCoroutine(FlipAnimation(onFinalized));
+            AudioManager.Instance.PlayButton();
+            if( gameObject.activeInHierarchy )
+            {
+                StartCoroutine(FlipAnimation(onFinalized));
+            }
         }
 
         private IEnumerator FlipAnimation( Action onFinalize = null )
@@ -90,7 +94,10 @@ namespace CardSystem
         public void DisableCard()
         {
             cardButton.onClick.RemoveAllListeners();
-            StartCoroutine(Fade());
+            if( gameObject.activeInHierarchy )
+            {
+                StartCoroutine(Fade());
+            }
         }
         
         private IEnumerator Fade()

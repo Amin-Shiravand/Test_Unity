@@ -26,7 +26,6 @@
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
-*.meta
 *.unityproj.meta
 *.booproj.meta
 *.asset.meta
