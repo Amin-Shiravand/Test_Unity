@@ -7,10 +7,10 @@ public class AudioManager : Singleton<AudioManager>
 {
     private GameObject audioObjectSourceInstance;
     private AudioSource audioSourceInstance;
-    private AudioClip ButtonClick;
-    private AudioClip Match;
-    private AudioClip Error;
-    private AudioClip Lose;
+    private AudioClip buttonClick;
+    private AudioClip match;
+    private AudioClip error;
+    private AudioClip lose;
 
     public override void Init()
     {
@@ -20,31 +20,36 @@ public class AudioManager : Singleton<AudioManager>
         }
         base.Init();
         
-        ButtonClick = GameResourceManager.Instance.LoadAudioClip("Click");
-        Match = GameResourceManager.Instance.LoadAudioClip("Match");
-        Error = GameResourceManager.Instance.LoadAudioClip("Error");
-        Lose = GameResourceManager.Instance.LoadAudioClip("Lose");
+        buttonClick = GameResourceManager.Instance.LoadAudioClip("Click");
+        match = GameResourceManager.Instance.LoadAudioClip("Match");
+        error = GameResourceManager.Instance.LoadAudioClip("Error");
+        lose = GameResourceManager.Instance.LoadAudioClip("Lose");
         audioObjectSourceInstance = new GameObject("AudioSourceInstance");
         audioSourceInstance = audioObjectSourceInstance.AddComponent<AudioSource>();
-        Debug.Assert(ButtonClick != null, "ButtonClick clip is null");             
-        Debug.Assert(Match != null, "Match clip is null");           
-        Debug.Assert(Error != null, "Error clip is null");  
+        Debug.Assert(buttonClick != null, "ButtonClick clip is null");             
+        Debug.Assert(match != null, "Match clip is null");           
+        Debug.Assert(error != null, "Error clip is null");  
         Debug.Assert(audioSourceInstance != null, "AudioSource is null");
-        Debug.Assert(Lose != null, "Lose is null");
+        Debug.Assert(lose != null, "Lose is null");
     }
     
     public void PlayButton()
     {
-        audioSourceInstance.PlayOneShot(ButtonClick);
+        audioSourceInstance.PlayOneShot(buttonClick);
     }
     
     public void PlayError()
     {
-        audioSourceInstance.PlayOneShot(Error);
+        audioSourceInstance.PlayOneShot(error);
     }
     
     public void PlayMatchPairs()
     {
-        audioSourceInstance.PlayOneShot(Match);
+        audioSourceInstance.PlayOneShot(match);
+    }
+    
+    public void LooseGame()
+    {
+        audioSourceInstance.PlayOneShot(lose);
     }
 }
