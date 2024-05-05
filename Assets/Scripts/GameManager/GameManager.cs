@@ -7,20 +7,18 @@ using Utils;
 
 public class GameManager : MonoBehaviorSingleton<GameManager>
 {
-    [Range(2, 9)] public int GridSize = 8;
     [Range(0, 5)] public float PreviewTime = 1f;
     public RectTransform Board;
     public Transform Root;
 
     public void Start()
     {
-       InitCardSystem();
     }
 
-    private void InitCardSystem()
+    public void InitCardSystem(int boardSize =2)
     {
         CardManager.Instance.LoadCardSprites();
-        CardManager.Instance.SetupCards(Root, Board, GridSize);
+        CardManager.Instance.SetupCards(Root, Board, boardSize);
         CardManager.Instance.SetupSpritesOnCards();
         StartCoroutine(CardManager.Instance.BoardPreview(PreviewTime));
         CardManager.Instance.AddListeners();
@@ -28,7 +26,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
         CardManager.Instance.SetCountOfCards();
     }
 
-    private void DeinitCardSystem()
+    public void DeinitCardSystem()
     {
         CardManager.Instance.OnCardsAreOver -= WinGame;
         CardManager.Instance.RemoveListeners();
