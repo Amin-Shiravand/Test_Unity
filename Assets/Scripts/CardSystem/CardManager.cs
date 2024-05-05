@@ -169,11 +169,13 @@ namespace CardSystem
         {
             if( cardPair.IsEqual() )
             {
+                AudioManager.Instance.PlayMatchPairs();
                 cardViews[left.Index].DisableCard();
                 cardViews[right.Index].DisableCard();
                 CheckCardsAreOver();
             } else
             {
+                AudioManager.Instance.PlayError();
                 cardViews[left.Index].Flip();
                 cardViews[right.Index].Flip();
             }

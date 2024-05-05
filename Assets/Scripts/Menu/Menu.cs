@@ -39,6 +39,7 @@ public class Menu : MonoBehaviour
 
     private void OnGameStarted()
     {
+        AudioManager.Instance.PlayButton();
         SetMenuState();
         GameManager.Instance.InitCardSystem(( int )BoardSizeSlider.value);
     }

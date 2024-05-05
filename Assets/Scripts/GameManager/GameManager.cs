@@ -15,19 +15,26 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     private void Awake()
     {
-        Debug.Assert(Board != null, "Board transform is null");             
-        Debug.Assert(Root != null, "Board root panel is null");           
-        Debug.Assert(BackToMenu != null, "Back to menu is null");      
+        Debug.Assert(Board != null, "Board transform is null");
+        Debug.Assert(Root != null, "Board root panel is null");
+        Debug.Assert(BackToMenu != null, "Back to menu is null");
+        AudioManager.Instance.Init();
         BackToMenu.onClick.AddListener(OnBackToMenuClick);
     }
 
     private void OnBackToMenuClick()
     {
+        AudioManager.Instance.PlayButton();
+        FinishGame();
+    }
+
+    private void FinishGame()
+    {
         Menu.Instance.SetMenuState();
         DeinitCardSystem();
     }
 
-    public void InitCardSystem(int boardSize =2)
+    public void InitCardSystem( int boardSize = 2 )
     {
         CardManager.Instance.LoadCardSprites();
         CardManager.Instance.SetupCards(Root, Board, boardSize);
@@ -47,6 +54,6 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     private void WinGame()
     {
-        OnBackToMenuClick();
+        FinishGame();
     }
 }

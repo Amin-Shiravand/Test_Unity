@@ -37,6 +37,6 @@ namespace Utils
         }
 
         protected Singleton() { }
-        protected virtual void Init() { }
+        public virtual void Init() { }
     }
 }
