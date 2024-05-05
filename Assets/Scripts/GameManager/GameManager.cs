@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CardSystem;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utils;
 using GameManagerTime = UnityEngine.Time;
@@ -12,7 +8,7 @@ using GameManagerTime = UnityEngine.Time;
 
 public class GameManager : MonoBehaviorSingleton<GameManager>
 {
-    [Range(10, 120)] public float Time = 30f;
+    [Range(1, 120)] public float Time = 30f;
     [Range(0, 5)] public float BasePreviewTime = 1f;
     public RectTransform Board;
     public Transform Root;
@@ -40,13 +36,13 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
         FinishGame();
     }
 
-    private void FinishGame(bool looseGame = false)
+    private void FinishGame( bool looseGame = false )
     {
         if( looseGame )
         {
             AudioManager.Instance.LooseGame();
         }
-        
+
         GameStarts = false;
         Menu.Instance.SetMenuState();
         DeinitCardSystem();
@@ -71,7 +67,6 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     public void DeinitCardSystem()
     {
-       
         CardManager.Instance.OnCardsAreOver -= WinGame;
         CardManager.Instance.RemoveListeners();
         CardManager.Instance.FlushTheCards();
@@ -106,7 +101,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
         UpdateTimeText();
         nextSecond = timeKeeper - 1;
     }
-    
+
     private void UpdateTimeText()
     {
         TimeText.text = $"Time: {Mathf.CeilToInt(timeKeeper)}";
@@ -125,6 +120,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
             nextSecond = timeKeeper - 1;
             UpdateTimeText();
         }
+
         if( timeKeeper < 0 )
         {
             FinishGame(true);

@@ -290,7 +290,7 @@ RectTransform:
   m_Father: {fileID: 405442887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -395,7 +395,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.27058825, g: 0.7607843, b: 0.6156863, a: 1}
     m_HighlightedColor: {r: 0.18009079, g: 0.5377358, b: 0.43187287, a: 1}
     m_PressedColor: {r: 0.16470589, g: 0.4784314, b: 0.49803925, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.27058825, g: 0.7607843, b: 0.6156863, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -931,7 +931,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.27058825, g: 0.7607843, b: 0.6156863, a: 1}
     m_HighlightedColor: {r: 0.18009079, g: 0.5377358, b: 0.43187287, a: 1}
     m_PressedColor: {r: 0.16470589, g: 0.4784314, b: 0.49803925, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.27058825, g: 0.7607843, b: 0.6156863, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1099,7 +1099,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1118294782
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acabc29f0b7aead448a7e544e6d33294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Time: 10
+  Time: 20
   BasePreviewTime: 1
   Board: {fileID: 1925525012}
   Root: {fileID: 1619840755}
@@ -2235,7 +2235,7 @@ RectTransform:
   m_Father: {fileID: 174326880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
