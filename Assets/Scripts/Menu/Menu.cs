@@ -12,9 +12,8 @@ public class Menu : MonoBehaviour
 {
     public static Menu Instance = null;
     public Button StartGame;
-
     public Button Continue;
-
+    public Button ExitGame; 
     public TMP_Text BoardSizeText;
 
     public Slider BoardSizeSlider;
@@ -23,17 +22,19 @@ public class Menu : MonoBehaviour
     {
         Debug.Assert(StartGame != null, "start button is null");
         Debug.Assert(Continue != null, "continue button is null");
+        Debug.Assert(ExitGame != null, "ExitGame button is null");      
         Debug.Assert(BoardSizeText != null, "Board size text is null");
         Debug.Assert(BoardSizeSlider != null, "Board Size Slide is null");
         BoardSizeSlider.onValueChanged.AddListener(OnBoardSizeTextChanged);
         StartGame.onClick.AddListener(OnGameStarted);
         Continue.onClick.AddListener(OnContinueGame);
+        ExitGame.onClick.AddListener(OnExitGame); 
         BoardSizeSlider.minValue = 2;
         BoardSizeSlider.maxValue = 12;
         BoardSizeSlider.wholeNumbers = true;
         Instance = this;
     }
-
+    
     public void OnEnable()
     {
         Continue.interactable = SaveManager.Instance.IsSaveFileExist();
@@ -62,4 +63,9 @@ public class Menu : MonoBehaviour
         GameManager.Instance.LoadGame(saveData);
         SetMenuState();
     }
+    
+    private void OnExitGame()                   
+    {                                           
+        Application.Quit();                     
+    }                                           
 }
